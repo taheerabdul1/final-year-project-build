@@ -8,10 +8,17 @@ import passport from "passport"
 import passportLocalMongoose from "passport-local-mongoose"
 import MongoStore from "connect-mongo"
 dotenv.config();
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const port = 3000;
 
-//test
+app.use(express.static(__dirname +  "/views"));
 
 app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
 
@@ -86,6 +93,10 @@ app.listen(port, () => {
 ROUTES
 
 /*/
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname +  "/views/index.html")
+})
 
 app.get("/api/mosques", async (req, res) => {
   try {
