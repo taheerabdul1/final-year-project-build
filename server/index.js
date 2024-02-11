@@ -45,6 +45,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+console.log(process.env.URI);
+
 // Connect to the database
 mongoose.connect(process.env.URI).catch((err) => console.log(err));
 
