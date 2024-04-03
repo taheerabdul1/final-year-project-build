@@ -8,15 +8,14 @@ import passport from "passport"
 import passportLocalMongoose from "passport-local-mongoose"
 import MongoStore from "connect-mongo"
 dotenv.config();
+const app = express();
+const port = 3000;
 
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const app = express();
-const port = 3000;
 
 app.use(express.static(__dirname +  "/views"));
 
@@ -44,8 +43,6 @@ app.use(
 //initialise passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-console.log(process.env.URI);
 
 // Connect to the database
 mongoose.connect(process.env.URI).catch((err) => console.log(err));
@@ -95,10 +92,6 @@ app.listen(port, () => {
 ROUTES
 
 /*/
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname +  "/views/index.html")
-})
 
 app.get("/api/mosques", async (req, res) => {
   try {
@@ -292,4 +285,8 @@ app.get("/api/logout", (req, res) => {
       res.json({ success: true });
     }
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/views/index.html'));
 });
