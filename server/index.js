@@ -29,7 +29,7 @@ app.use(
     secret: "some random and secure value",
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // One day
-      secure: true, // Change this to true in production
+      secure: false, // Change this to true in production
     },
     resave: false,
     saveUninitialized: false,
