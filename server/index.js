@@ -29,7 +29,7 @@ app.use(
     secret: "some random and secure value",
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // One day
-      secure: false, // Change this to true in production
+      secure: true, // Change this to true in production
     },
     resave: false,
     saveUninitialized: false,
@@ -60,6 +60,14 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  isAdmin: { type: Boolean, default: false },
+  chosenMosque: { type: mongoose.Schema.Types.ObjectId, ref: "Mosque" },
+  campaigns: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Campaign",
+    },
+  ],
 });
 
 // Define a schema for donation data
@@ -67,6 +75,7 @@ const donationSchema = new mongoose.Schema({
   amount: Number,
   donor: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   mosque: { type: mongoose.Schema.Types.ObjectId, ref: "Mosque" },
+  campaign: {type: mongoose.Schema.Types.ObjectId, ref: 'Campaign'},
 });
 
 const campaignSchema = new mongoose.Schema({
